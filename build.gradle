@@ -10,7 +10,7 @@ publishing {
         jar(MavenPublication) {  // Changed from 'aar
             groupId 'com.github.philzorin'
             artifactId 'native'
-            version '1.0.2'
+            version '1.0.3'
             artifact file("native.aar")
 
             // Generate minimal POM with dependencies (if needed)
