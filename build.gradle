@@ -1,30 +1,25 @@
-// Minimal build.gradle to trick JitPack into using a pre-built JAR
 plugins {
     id 'base'
     id 'maven-publish'
 }
 
-// === Critical Configuration ===
 publishing {
     publications {
-        jar(MavenPublication) {  // Changed from 'aar
+        jar(MavenPublication) {
             groupId 'com.github.philzorin'
             artifactId 'native'
             version '1.0.3'
             artifact file("native.aar")
 
-            // Generate minimal POM with dependencies (if needed)
             pom.withXml {
                 def deps = asNode().appendNode('dependencies')
 
-                // Add AppCompat dependency
                 def appCompatDep = deps.appendNode('dependency')
                 appCompatDep.appendNode('groupId', 'androidx.appcompat')
                 appCompatDep.appendNode('artifactId', 'appcompat')
                 appCompatDep.appendNode('version', '1.7.1')
                 appCompatDep.appendNode('scope', 'compile')
 
-                // Add Material Design dependency
                 def materialDep = deps.appendNode('dependency')
                 materialDep.appendNode('groupId', 'com.google.android.material')
                 materialDep.appendNode('artifactId', 'material')
@@ -35,7 +30,6 @@ publishing {
     }
 }
 
-// Disable ALL tasks except publishing
 tasks.whenTaskAdded { task ->
     if (!task.name.startsWith('publish')) {
         task.enabled = false
